@@ -2,12 +2,21 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TCE_App.Register"
-             Shell.FlyoutBehavior="Disabled">
+             >
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Register" TextColor="Orange"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
+        <StackLayout VerticalOptions="Start" HorizontalOptions="FillAndExpand" Padding="100">
+            <Entry Placeholder="Email" x:Name="registerEmail" TextColor="Black" PlaceholderColor="Gray"/>
+            <Entry Placeholder="Password" IsPassword="True" x:Name="registerPassword" TextColor="Black" PlaceholderColor="Gray"/>
+            <Button
+                   Text="Register"
+                   VerticalOptions="Center"
+                   TextColor="#ff8200"
+                   BackgroundColor="Transparent"
+                   BorderColor="#ff8200"
+                   BorderWidth="1.5"
+                   CornerRadius="50"
+                   Clicked="Button_Clicked"
+                   ></Button>
+         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

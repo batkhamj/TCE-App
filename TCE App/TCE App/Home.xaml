@@ -7,6 +7,7 @@
             <Label Text="Welcome!" TextColor="Orange"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
+            <Button Text="Logout" Clicked ="Button_Clicked" TextColor="White"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

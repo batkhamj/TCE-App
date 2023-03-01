@@ -1,9 +1,11 @@
-﻿using System;
+﻿using SQLite;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using TCE_App.Tables;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -17,21 +19,37 @@ namespace TCE_App
             InitializeComponent();
         }
 
-        private void Button_Clicked(object sender, EventArgs e)
+        async void Button_Clicked(object sender, EventArgs e)
         {
-            if(usernameEntry.Text == "admin" && passwordEntry.Text == "123")
+            var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "user-database.db");
+            var db = new SQLiteConnection(path);
+            var query = db.Table<RegisteredUsersTable>().Where(u => u.UserEmail.Equals(emailEntry.Text) && u.UserPassword.Equals(passwordEntry.Text)).FirstOrDefault();
+        
+            if(query != null)
             {
-                Navigation.PushAsync(new Home());
+                Application.Current.MainPage = new NavigationPage(new Home());
             }
             else
             {
-                DisplayAlert("Oops", "Incorrect Credentials", "Ok");
+                Device.BeginInvokeOnMainThread(async () =>
+                {
+                    var result = await this.DisplayAlert("Error", "Invalid Email or Password", "Ok", "Cancel");
+                    if (result)
+                    {
+                        await Navigation.PushAsync(new Login());
+                    }
+                    else
+                    {
+                        await Navigation.PushAsync(new Login());
+                    }
+
+                });
             }
         }
 
-        private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
+        async void TapGestureRecognizer_Tapped(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new Register());
+            await Navigation.PushAsync(new Register());
         }
     }
 }
